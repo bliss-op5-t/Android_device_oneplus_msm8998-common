@@ -33,13 +33,11 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
 
 import com.aurora.device.DeviceSettings.ModeSwitch.DCModeSwitch;
-import com.aurora.device.DeviceSettings.ModeSwitch.HBMModeSwitch;
 
 public class DeviceSettings extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
     public static final String KEY_SRGB_SWITCH = "srgb";
-    public static final String KEY_HBM_SWITCH = "hbm";
     public static final String KEY_DC_SWITCH = "dc";
     public static final String KEY_DCI_SWITCH = "dci";
     public static final String KEY_NIGHT_SWITCH = "night";
@@ -49,7 +47,6 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_VIBSTRENGTH = "vib_strength";
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
   
-    private TwoStatePreference mHBMModeSwitch;
     private SwitchPreference mFpsInfo;
     private VibratorStrengthPreference mVibratorStrength;
 
@@ -67,11 +64,6 @@ public class DeviceSettings extends PreferenceFragment
         mDCModeSwitch.setChecked(DCModeSwitch.isCurrentlyEnabled());
         mDCModeSwitch.setOnPreferenceChangeListener(new DCModeSwitch());
 
-        mHBMModeSwitch = findPreference(KEY_HBM_SWITCH);
-        mHBMModeSwitch.setEnabled(HBMModeSwitch.isSupported());
-        mHBMModeSwitch.setChecked(HBMModeSwitch.isCurrentlyEnabled());
-        mHBMModeSwitch.setOnPreferenceChangeListener(this);
-
         mFpsInfo = findPreference(KEY_FPS_INFO);
         mFpsInfo.setChecked(isFPSOverlayRunning());
         mFpsInfo.setOnPreferenceChangeListener(this);
@@ -81,8 +73,7 @@ public class DeviceSettings extends PreferenceFragment
     @Override
     public void onResume() {
         super.onResume();
-        mHBMModeSwitch.setChecked(HBMModeSwitch.isCurrentlyEnabled());
-        mFpsInfo.setChecked(isFPSOverlayRunning());
+       mFpsInfo.setChecked(isFPSOverlayRunning());
     }
 
     @Override
@@ -95,18 +86,8 @@ public class DeviceSettings extends PreferenceFragment
             } else {
                 getContext().stopService(fpsinfo);
             }
-        } else if (preference == mHBMModeSwitch) {
-            Boolean enabled = (Boolean) newValue;
-            Utils.writeValue(HBMModeSwitch.getFile(), enabled ? "5" : "0");
-            Intent hbmIntent = new Intent(getContext(),
-                    com.aurora.device.DeviceSettings.HBMModeService.class);
-            if (enabled) {
-                getContext().startService(hbmIntent);
-            } else {
-                getContext().stopService(hbmIntent);
-            }
-        }
-        return true;
+      }
+      return true;
     }
 
     @Override
