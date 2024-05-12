@@ -37,12 +37,8 @@ import com.aurora.device.DeviceSettings.ModeSwitch.DCModeSwitch;
 public class DeviceSettings extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
-    public static final String KEY_SRGB_SWITCH = "srgb";
     public static final String KEY_DC_SWITCH = "dc";
     public static final String KEY_DCI_SWITCH = "dci";
-    public static final String KEY_NIGHT_SWITCH = "night";
-    public static final String KEY_ADAPTIVE_SWITCH = "adaptive";
-    public static final String KEY_ONEPLUS_SWITCH = "oneplus";
     public static final String KEY_FPS_INFO = "fps_info";
     public static final String KEY_VIBSTRENGTH = "vib_strength";
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
